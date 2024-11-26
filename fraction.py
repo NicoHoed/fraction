@@ -142,17 +142,21 @@ class Fraction:
         """
 
         if isinstance(other, Fraction):
+            if other.__denominator == 1:
+                num_power = pow(self.__numerator, other.__numerator)
+                den_power = pow(self.__denominator, other.__numerator)
+            else:
+                # Exposant num / den
+                num_power = pow(self.__numerator, other.__numerator)
+                den_power = pow(self.__denominator, other.__numerator)
+                                                                            # Fraction power formula
+                num_result = num_power ** (1 / other.__denominator)
+                den_result = den_power ** (1 / other.__denominator)
 
-            num_power = pow(self.__numerator, other.__numerator)
-            den_power = pow(self.__denominator, other.__denominator)
+                num_power = round(num_result)
+                den_power = round(den_result)
 
-            num_result = pow(num_power, 1 / other.__denominator)      # fraction pow. formula
-            den_result = pow(den_power, 1 / other.__denominator)
-
-            new_num = round(num_result)
-            new_den = round(den_result)
-
-            return Fraction(new_num, new_den)
+            return Fraction(num_power, den_power)
         else:
             raise TypeError("Can only power two Fraction instances.")
 
@@ -228,3 +232,82 @@ class Fraction:
             return (self - other).is_unit()
         else:
             raise TypeError("Can only compare two Fraction instances.")
+
+if __name__ == '__main__':
+    # Test initialisation et simplification
+    print(Fraction(4, 8))  # Doit afficher "1/2"
+    print(Fraction(-4, -8))  # Doit afficher "1/2"
+    print(Fraction(-4, 8))  # Doit afficher "-1/2"
+
+    print('---------------------------------------------------------------')
+
+    # Test représentation textuelle
+    print(Fraction(3, 1))  # Doit afficher "3"
+    print(Fraction(3, 4))  # Doit afficher "3/4"
+
+    print('---------------------------------------------------------------')
+
+    # Test représentation en nombre mixte
+    print(Fraction(7, 3).as_mixed_number())  # Doit afficher "2 1/3"
+    print(Fraction(4, 2).as_mixed_number())  # Doit afficher "2"
+
+    print('---------------------------------------------------------------')
+
+    # Test addition
+    print(Fraction(1, 2) + Fraction(1, 3))  # Doit afficher "5/6"
+    # Test soustraction
+    print(Fraction(1, 2) - Fraction(1, 3))  # Doit afficher "1/6"
+    # Test multiplication
+    print(Fraction(2, 3) * Fraction(3, 4))  # Doit afficher "1/2"
+    # Test division
+    print(Fraction(2, 3) / Fraction(3, 4))  # Doit afficher "8/9"
+
+    print('---------------------------------------------------------------')
+
+    # Test division par zéro
+    try:
+        print(Fraction(1, 2) / Fraction(0, 1))
+    except ZeroDivisionError as e:
+        print("Erreur détectée :", e)  # Doit afficher une erreur de division par zéro
+
+    print('---------------------------------------------------------------')
+
+    # Test puissance
+    print(Fraction(2, 3) ** Fraction(2, 1))  # Doit afficher "4/9"
+
+    print('---------------------------------------------------------------')
+
+    # Test égalité
+    print(Fraction(2, 3) == Fraction(4, 6))  # Doit afficher "True"
+
+    print('---------------------------------------------------------------')
+
+    # Test conversion en flottant
+    print(float(Fraction(1, 2)))  # Doit afficher "0.5"
+
+    print('---------------------------------------------------------------')
+
+    # Test propriétés
+    print(Fraction(0, 3).is_zero())  # Doit afficher "True"
+    print(Fraction(4, 2).is_integer())  # Doit afficher "True"
+    print(Fraction(2, 3).is_proper())  # Doit afficher "True"
+    print(Fraction(1, 3).is_unit())  # Doit afficher "True"
+    print('\n')
+    print(Fraction(1, 2).is_zero())  # Doit afficher "False"
+    print(Fraction(1, 3).is_integer())  # Doit afficher "False"
+    print(Fraction(3, 1).is_proper())  # Doit afficher "False"
+    print(Fraction(5, 3).is_unit())  # Doit afficher "False"
+
+    print('---------------------------------------------------------------')
+
+    # Test fraction adjacente
+    print(Fraction(1, 2).is_adjacent_to(Fraction(1, 3)))  # Doit afficher "True"
+    print(Fraction(2, 2).is_adjacent_to(Fraction(1, 3)))  # Doit afficher "False"
+
+    print('---------------------------------------------------------------')
+
+    # Test erreurs de type
+    try:
+        print(Fraction(1, 2) + 1)
+    except TypeError as e:
+        print("Erreur détectée :", e)  # Doit afficher une erreur de type
