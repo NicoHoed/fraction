@@ -11,17 +11,42 @@ class TestFraction(unittest.TestCase):
             Fraction(1, 0)
 
     def test_str_and_as_mixed_number(self):
+        self.assertEqual(str(Fraction(3, 6)), "1/2")
         self.assertEqual(str(Fraction(3, 1)), "3")
-        self.assertEqual(str(Fraction(3, 4)), "3/4")
+        self.assertEqual(str(Fraction(2, -3)), "-2/3")
+        self.assertEqual(str(Fraction(0, 4)), "0")
+
         self.assertEqual(Fraction(7, 3).as_mixed_number(), "2 1/3")
         self.assertEqual(Fraction(4, 2).as_mixed_number(), "2")
         self.assertEqual(Fraction(1, 2).as_mixed_number(), "1/2")
 
-    def test_addition_and_division(self):
-        self.assertEqual(Fraction(1, 2) + Fraction(1, 3), Fraction(5, 6))
-        self.assertEqual(Fraction(2, 3) / Fraction(3, 4), Fraction(8, 9))
-        with self.assertRaises(ZeroDivisionError):  # Division par 0
-            Fraction(1, 2) / Fraction(0, 1)
+    def test_addition(self):
+        self.assertEqual(Fraction(0, 1) + Fraction(1, 3), Fraction(1, 3))
+        self.assertEqual(Fraction(0, 1) + Fraction(0, 1), Fraction(0, 1))
+        self.assertEqual(Fraction(-1, 2) + Fraction(1, 2), Fraction(0, 1))
+
+    def test_subtraction(self):
+        self.assertEqual(Fraction(0, 1) - Fraction(1, 3), Fraction(-1, 3))
+        self.assertEqual(Fraction(1, 3) - Fraction(0, 1), Fraction(1, 3))
+        self.assertEqual(Fraction(-1, 2) - Fraction(-1, 2), Fraction(0, 1))
+
+    def test_multiplication(self):
+        self.assertEqual(Fraction(0, 1) * Fraction(1, 3), Fraction(0, 1))
+        self.assertEqual(Fraction(1, 3) * Fraction(0, 1), Fraction(0, 1))
+        self.assertEqual(Fraction(-1, 2) * Fraction(0, 1), Fraction(0, 1))
+
+    def test_division(self):
+        self.assertEqual(Fraction(0, 1) / Fraction(1, 3), Fraction(0, 1))
+        with self.assertRaises(ZeroDivisionError):
+            Fraction(1, 3) / Fraction(0, 1)  # Division par 0
+        with self.assertRaises(ZeroDivisionError):
+            Fraction(0, 1) / Fraction(0, 1)  # 0 / 0
+
+    def test_power(self):
+        self.assertEqual(Fraction(0, 1) ** Fraction(2, 1), Fraction(0, 1))
+        with self.assertRaises(ZeroDivisionError):
+            Fraction(0, 1) ** Fraction(-1, 1)  # 0^(-1)
+        self.assertEqual(Fraction(1, 3) ** Fraction(0, 1), Fraction(1, 1))
 
     def test_equality(self):
         self.assertTrue(Fraction(2, 3) == Fraction(4, 6))
