@@ -52,6 +52,12 @@ class TestFraction(unittest.TestCase):
         self.assertTrue(Fraction(2, 3) == Fraction(4, 6))
         self.assertFalse(Fraction(2, 3) == Fraction(3, 4))
 
+    def test_is_zero(self):
+        self.assertTrue(Fraction(0, 1).is_zero())
+        self.assertTrue(Fraction(0, 5).is_zero())
+        self.assertFalse(Fraction(1, 3).is_zero())
+        self.assertFalse(Fraction(-1, 2).is_zero())
+
     def test_is_integer(self):
         self.assertTrue(Fraction(4, 2).is_integer())
         self.assertFalse(Fraction(3, 4).is_integer())
@@ -59,6 +65,12 @@ class TestFraction(unittest.TestCase):
     def test_is_proper(self):
         self.assertTrue(Fraction(2, 3).is_proper())
         self.assertFalse(Fraction(3, 2).is_proper())
+
+    def test_is_unit(self):
+        self.assertTrue(Fraction(1, 3).is_unit())
+        self.assertTrue(Fraction(-1, 7).is_unit())
+        self.assertFalse(Fraction(2, 3).is_unit())
+        self.assertFalse(Fraction(0, 1).is_unit())
 
     def test_is_adjacent_to(self):
         self.assertTrue(Fraction(1, 2).is_adjacent_to(Fraction(1, 3)))
