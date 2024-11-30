@@ -34,6 +34,7 @@ class TestFraction(unittest.TestCase):
         self.assertEqual(Fraction(0, 1) * Fraction(1, 3), Fraction(0, 1))
         self.assertEqual(Fraction(1, 3) * Fraction(0, 1), Fraction(0, 1))
         self.assertEqual(Fraction(-1, 2) * Fraction(0, 1), Fraction(0, 1))
+        self.assertEqual(Fraction(4, 2) * Fraction(5, 1), Fraction(10, 1))
 
     def test_division(self):
         self.assertEqual(Fraction(0, 1) / Fraction(1, 3), Fraction(0, 1))
@@ -41,6 +42,7 @@ class TestFraction(unittest.TestCase):
             Fraction(1, 3) / Fraction(0, 1)  # Division par 0
         with self.assertRaises(ZeroDivisionError):
             Fraction(0, 1) / Fraction(0, 1)  # 0 / 0
+        self.assertEqual(Fraction(4, 2) / Fraction(5, 1), Fraction(2, 5))
 
     def test_power(self):
         self.assertEqual(Fraction(0, 1) ** Fraction(2, 1), Fraction(0, 1))
