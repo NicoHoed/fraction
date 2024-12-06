@@ -133,7 +133,6 @@ class Fraction:
         new_den = self.__denominator * other.__numerator  # fraction division formula
         return Fraction(new_num, new_den)
 
-    from math import isclose
 
     def __pow__(self, other):
         """Overloading of the ** operator for fractions.
@@ -144,6 +143,7 @@ class Fraction:
             - TypeError if `other` is not a Fraction instance.
             - ValueError if the result would be a complex number or non-representable fraction.
         """
+
         if not isinstance(other, Fraction):
             raise TypeError("Can only power two Fraction instances.")
 
@@ -240,82 +240,3 @@ class Fraction:
             return (self - other).is_unit()
         else:
             raise TypeError("Can only compare two Fraction instances.")
-
-# if __name__ == '__main__':
-#    # Test initialisation et simplification
-#    print(Fraction(4, 8))  # Doit afficher "1/2"
-#    print(Fraction(-4, -8))  # Doit afficher "1/2"
-#    print(Fraction(-4, 8))  # Doit afficher "-1/2"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test représentation textuelle
-#    print(Fraction(3, 1))  # Doit afficher "3"
-#    print(Fraction(3, 4))  # Doit afficher "3/4"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test représentation en nombre mixte
-#    print(Fraction(7, 3).as_mixed_number())  # Doit afficher "2 1/3"
-#    print(Fraction(4, 2).as_mixed_number())  # Doit afficher "2"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test addition
-#    print(Fraction(1, 2) + Fraction(1, 3))  # Doit afficher "5/6"
-#    # Test soustraction
-#    print(Fraction(1, 2) - Fraction(1, 3))  # Doit afficher "1/6"
-#    # Test multiplication
-#    print(Fraction(2, 3) * Fraction(3, 4))  # Doit afficher "1/2"
-#    # Test division
-#    print(Fraction(2, 3) / Fraction(3, 4))  # Doit afficher "8/9"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test division par zéro
-#    try:
-#        print(Fraction(1, 2) / Fraction(0, 1))
-#    except ZeroDivisionError as e:
-#        print("Erreur détectée :", e)  # Doit afficher une erreur de division par zéro
-
-#    print('---------------------------------------------------------------')
-
-#    # Test puissance
-#    print(Fraction(2, 3) ** Fraction(2, 1))  # Doit afficher "4/9"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test égalité
-#    print(Fraction(2, 3) == Fraction(4, 6))  # Doit afficher "True"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test conversion en flottant
-#    print(float(Fraction(1, 2)))  # Doit afficher "0.5"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test propriétés
-#    print(Fraction(0, 3).is_zero())  # Doit afficher "True"
-#    print(Fraction(4, 2).is_integer())  # Doit afficher "True"
-#    print(Fraction(2, 3).is_proper())  # Doit afficher "True"
-#    print(Fraction(1, 3).is_unit())  # Doit afficher "True"
-#    print('\n')
-#    print(Fraction(1, 2).is_zero())  # Doit afficher "False"
-#    print(Fraction(1, 3).is_integer())  # Doit afficher "False"
-#    print(Fraction(3, 1).is_proper())  # Doit afficher "False"
-#    print(Fraction(5, 3).is_unit())  # Doit afficher "False"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test fraction adjacente
-#    print(Fraction(1, 2).is_adjacent_to(Fraction(1, 3)))  # Doit afficher "True"
-#    print(Fraction(2, 2).is_adjacent_to(Fraction(1, 3)))  # Doit afficher "False"
-
-#    print('---------------------------------------------------------------')
-
-#    # Test erreurs de type
-#    try:
-#        print(Fraction(1, 2) + 1)
-#    except TypeError as e:
-#        print("Erreur détectée :", e)  # Doit afficher une erreur de type
