@@ -133,32 +133,40 @@ class Fraction:
         new_den = self.__denominator * other.__numerator  # fraction division formula
         return Fraction(new_num, new_den)
 
+    from math import isclose
+
     def __pow__(self, other):
-        """Overloading of the ** operator for fractions
+        """Overloading of the ** operator for fractions.
 
         PRE : `other` must be an instance of Fraction.
         POST : Returns the power with a new simplified Fraction.
-        RAISES : TypeError if `other` is not a Fraction instance.
+        RAISES :
+            - TypeError if `other` is not a Fraction instance.
+            - ValueError if the result would be a complex number or non-representable fraction.
         """
-
-        if isinstance(other, Fraction):
-            if other.__denominator == 1:
-                num_power = pow(self.__numerator, other.__numerator)
-                den_power = pow(self.__denominator, other.__numerator)
-            else:
-                # Exposant num / den
-                num_power = pow(self.__numerator, other.__numerator)
-                den_power = pow(self.__denominator, other.__numerator)
-                                                                            # Fraction power formula
-                num_result = num_power ** (1 / other.__denominator)
-                den_result = den_power ** (1 / other.__denominator)
-
-                num_power = round(num_result)
-                den_power = round(den_result)
-
-            return Fraction(num_power, den_power)
-        else:
+        if not isinstance(other, Fraction):
             raise TypeError("Can only power two Fraction instances.")
+
+        if other.denominator == 1:  # Exponent is an integer
+            num_power = pow(self.__numerator, other.numerator)
+            den_power = pow(self.__denominator, other.numerator)
+            return Fraction(num_power, den_power)
+
+        if self.numerator < 0:  # Negative base with fractional exponent
+            raise ValueError("Cannot compute the fractional power of a negative number.")
+
+        # Handle fractional exponents
+        num_power = pow(self.__numerator, other.numerator)
+        den_power = pow(self.__denominator, other.numerator)
+
+        num_result = num_power ** (1 / other.denominator)
+        den_result = den_power ** (1 / other.denominator)
+
+        # Ensure results are integers for valid fractions by rounding and comparing
+        if round(num_result) != num_result or round(den_result) != den_result:
+            raise ValueError("Resulting fraction is not representable as integers.")
+
+        return Fraction(int(round(num_result)), int(round(den_result)))
 
     def __eq__(self, other):
         """Overloading of the == operator for fractions

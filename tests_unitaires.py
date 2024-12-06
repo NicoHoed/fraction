@@ -94,5 +94,47 @@ class TestFraction(unittest.TestCase):
         with self.assertRaises(TypeError):  # Cas `other` pas une Fraction
             Fraction(1, 2).is_adjacent_to(1)
 
+# =============================================================
+# ============== TEST SUPPLEMENTAIRES INVALIDES ===============
+# =============================================================
+
+    def test_invalid_addition(self):
+        with self.assertRaises(TypeError):
+            Fraction(1, 2) + "not a fraction"
+
+    def test_invalid_subtraction(self):
+        with self.assertRaises(TypeError):
+            Fraction(1, 2) - 42
+
+    def test_invalid_multiplication(self):
+        with self.assertRaises(TypeError):
+            Fraction(1, 2) * None
+
+    def test_invalid_division(self):
+        with self.assertRaises(TypeError):
+            Fraction(1, 2) / [1, 2]
+
+    def test_invalid_power(self):
+        with self.assertRaises(TypeError):
+            Fraction(1, 2) ** "not a fraction"
+
+    # Tests pour couvrir les calculs dans __pow__
+    def test_fractional_exponent_complex_result(self):
+        with self.assertRaises(ValueError):  # Racine négative
+            Fraction(-2, 3) ** Fraction(1, 2)
+
+    def test_fractional_exponent_non_integer_result(self):
+        with self.assertRaises(ValueError):  # Fraction non représentable
+            Fraction(2, 3) ** Fraction(1, 2)
+
+    def test_integer_exponent(self):
+        self.assertEqual(Fraction(2, 3) ** Fraction(2, 1), Fraction(4, 9))
+
+    # Tests pour couvrir la méthode __float__
+    def test_float_conversion(self):
+        self.assertAlmostEqual(float(Fraction(1, 2)), 0.5)
+        self.assertAlmostEqual(float(Fraction(-3, 4)), -0.75)
+        self.assertEqual(float(Fraction(0, 1)), 0.0)
+
 if __name__ == "__main__":
     unittest.main()
