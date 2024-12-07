@@ -176,10 +176,10 @@ class Fraction:
         RAISES : TypeError if `other` is not a Fraction instance.
         """
 
-        if isinstance(other, Fraction):
-            return self.numerator * other.denominator == self.denominator * other.numerator
-        else:
-            raise TypeError("Can only compare two Fraction instances.")
+        if not isinstance(other, Fraction):
+            raise TypeError("Can only power two Fraction instances.")
+
+        return self.numerator * other.denominator == self.denominator * other.numerator
 
     def __float__(self):
         """Returns the decimal value of the fraction
@@ -236,7 +236,8 @@ class Fraction:
         RAISES : TypeError if `other` is not a Fraction instance.
         """
 
-        if isinstance(other, Fraction):
-            return (self - other).is_unit()
-        else:
+
+        if not isinstance(other, Fraction):
             raise TypeError("Can only compare two Fraction instances.")
+
+        return (self - other).is_unit()

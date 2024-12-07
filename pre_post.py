@@ -9,7 +9,7 @@ class Fraction:
     def __init__(self, num=0, den=1):
         """This builds a fraction based on some numerator and denominator.
 
-        PRE : den != 0
+        PRE : None
         POST : The fraction is initialized and simplified with GCD
         RAISES : if den = 0 then ValueError
         """
@@ -38,7 +38,7 @@ class Fraction:
     def __add__(self, other):
         """Overloading of the + operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the sum with a new simplified Fraction.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
@@ -46,7 +46,7 @@ class Fraction:
     def __sub__(self, other):
         """Overloading of the - operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the subtraction with a new simplified Fraction.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
@@ -54,7 +54,7 @@ class Fraction:
     def __mul__(self, other):
         """Overloading of the * operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the multiplication with a new simplified Fraction.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
@@ -62,7 +62,7 @@ class Fraction:
     def __truediv__(self, other):
         """Overloading of the / operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the division with a new simplified Fraction.
         RAISES :
                 - TypeError if `other` is not a Fraction instance.
@@ -72,7 +72,7 @@ class Fraction:
     def __pow__(self, other):
         """Overloading of the ** operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the power with a new simplified Fraction.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
@@ -80,7 +80,7 @@ class Fraction:
     def __eq__(self, other):
         """Overloading of the == operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns True if the fractions are equal, otherwise False.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
@@ -125,7 +125,7 @@ class Fraction:
     def is_adjacent_to(self, other):
         """Check if two fractions differ by a unit fraction
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns True if the fractions differ by exactly 1/denominator.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
