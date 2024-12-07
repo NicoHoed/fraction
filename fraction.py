@@ -147,13 +147,13 @@ class Fraction:
         if not isinstance(other, Fraction):
             raise TypeError("Can only power two Fraction instances.")
 
-        if self.numerator < 0:  # Negative base with fractional exponent
-            raise ValueError("Cannot calculate the fractional power of a negative number.")
-
         if other.denominator == 1:  # Exponent is an integer
             num_power = pow(self.numerator, other.numerator)
             den_power = pow(self.denominator, other.numerator)
             return Fraction(num_power, den_power)
+
+        if self.numerator < 0:  # Negative base with fractional exponent
+            raise ValueError("Cannot calculate the fractional power of a negative number.")
 
         # Handle fractional exponents
         num_power = pow(self.numerator, other.numerator)
