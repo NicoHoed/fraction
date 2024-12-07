@@ -22,9 +22,9 @@ class Fraction:
         self.__numerator = num // common_divisor
         self.__denominator = den // common_divisor
 
-        if self.__denominator < 0:                     # Force den to be positive
-            self.__numerator = -self.__numerator
-            self.__denominator = -self.__denominator
+        if self.denominator < 0:                     # Force den to be positive
+            self.__numerator = -self.numerator
+            self.__denominator = -self.denominator
 
     @property
     def numerator(self):
@@ -43,10 +43,9 @@ class Fraction:
         POST : Returns a string : 'num/den'.
         """
 
-        if self.__denominator == 1:
-            return str(self.__numerator)
-        else:
-            return f"{self.__numerator}/{self.__denominator}"
+        if self.denominator == 1:
+            return str(self.numerator)
+        return f"{self.numerator}/{self.denominator}"
 
     def as_mixed_number(self):
         """Return a textual representation of the reduced form of the fraction as a mixed number
@@ -56,67 +55,68 @@ class Fraction:
         PRE : None.
         POST : Returns a string : 'integer part + remainder/denominator'.
         """
-        integer_part = self.__numerator // self.__denominator          # `//` give the integer part
-        remainder = abs(self.__numerator % self.__denominator)         # `%` give the remainder
+        integer_part = self.numerator // self.denominator          # `//` give the integer part
+        remainder = abs(self.numerator % self.denominator)         # `%` give the remainder
 
         if remainder == 0:
             return str(integer_part)
         elif integer_part == 0:
-            return f"{remainder}/{self.__denominator}"
+            return f"{remainder}/{self.denominator}"
         else:
-            return f"{integer_part} {remainder}/{self.__denominator}"
+            return f"{integer_part} {remainder}/{self.denominator}"
 
     # ------------------ Operators overloading ------------------
 
     def __add__(self, other):
         """Overloading of the + operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the sum with a new simplified Fraction.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
 
-        if isinstance(other, Fraction):
-            new_num = self.__numerator * other.__denominator + self.__denominator * other.__numerator
-            new_den = self.__denominator * other.__denominator    # fraction sum formula
-            return Fraction(new_num, new_den)
-        else:
+        if not isinstance(other, Fraction):
             raise TypeError("Can only add two Fraction instances.")
+
+        new_num = self.numerator * other.denominator + self.denominator * other.numerator
+        new_den = self.denominator * other.denominator  # fraction sum formula
+        return Fraction(new_num, new_den)
 
     def __sub__(self, other):
         """Overloading of the - operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the subtraction with a new simplified Fraction.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
 
-        if isinstance(other, Fraction):
-            new_num = self.__numerator * other.__denominator - self.__denominator * other.__numerator
-            new_den = self.__denominator * other.__denominator    # fraction sub. formula
-            return Fraction(new_num, new_den)
-        else:
-            raise TypeError("Can only subtract two Fraction instances.")
+        if not isinstance(other, Fraction):
+            raise TypeError("Can only add two Fraction instances.")
+
+        new_num = self.numerator * other.denominator - self.denominator * other.numerator
+        new_den = self.denominator * other.denominator    # fraction sub. formula
+        return Fraction(new_num, new_den)
 
     def __mul__(self, other):
         """Overloading of the * operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the multiplication with a new simplified Fraction.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
 
-        if isinstance(other, Fraction):
-            new_num = self.__numerator * other.__numerator
-            new_den = self.__denominator * other.__denominator    # fraction mul. formula
-            return Fraction(new_num, new_den)
-        else:
-            raise TypeError("Can only multiply two Fraction instances.")
+        if not isinstance(other, Fraction):
+            raise TypeError("Can only add two Fraction instances.")
+
+        new_num = self.numerator * other.numerator
+        new_den = self.denominator * other.denominator    # fraction mul. formula
+        return Fraction(new_num, new_den)
+
 
     def __truediv__(self, other):
         """Overloading of the / operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the division with a new simplified Fraction.
         RAISES :
                 - TypeError if `other` is not a Fraction instance.
@@ -126,18 +126,18 @@ class Fraction:
         if not isinstance(other, Fraction):
             raise TypeError("Can only divide two Fraction instances.")
 
-        if other.__numerator == 0:
+        if other.numerator == 0:
             raise ZeroDivisionError("Numerator cant be 0.")
 
-        new_num = self.__numerator * other.__denominator
-        new_den = self.__denominator * other.__numerator  # fraction division formula
+        new_num = self.numerator * other.denominator
+        new_den = self.denominator * other.numerator  # fraction division formula
         return Fraction(new_num, new_den)
 
 
     def __pow__(self, other):
         """Overloading of the ** operator for fractions.
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns the power with a new simplified Fraction.
         RAISES :
             - TypeError if `other` is not a Fraction instance.
@@ -147,17 +147,17 @@ class Fraction:
         if not isinstance(other, Fraction):
             raise TypeError("Can only power two Fraction instances.")
 
-        if other.denominator == 1:  # Exponent is an integer
-            num_power = pow(self.__numerator, other.numerator)
-            den_power = pow(self.__denominator, other.numerator)
-            return Fraction(num_power, den_power)
-
         if self.numerator < 0:  # Negative base with fractional exponent
             raise ValueError("Cannot calculate the fractional power of a negative number.")
 
+        if other.denominator == 1:  # Exponent is an integer
+            num_power = pow(self.numerator, other.numerator)
+            den_power = pow(self.denominator, other.numerator)
+            return Fraction(num_power, den_power)
+
         # Handle fractional exponents
-        num_power = pow(self.__numerator, other.numerator)
-        den_power = pow(self.__denominator, other.numerator)
+        num_power = pow(self.numerator, other.numerator)
+        den_power = pow(self.denominator, other.numerator)
 
         num_result = num_power ** (1 / other.denominator)
         den_result = den_power ** (1 / other.denominator)
@@ -171,13 +171,13 @@ class Fraction:
     def __eq__(self, other):
         """Overloading of the == operator for fractions
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns True if the fractions are equal, otherwise False.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
 
         if isinstance(other, Fraction):
-            return self.__numerator * other.__denominator == self.__denominator * other.__numerator
+            return self.numerator * other.denominator == self.denominator * other.numerator
         else:
             raise TypeError("Can only compare two Fraction instances.")
 
@@ -188,7 +188,7 @@ class Fraction:
         POST : Returns a float number (the result of num / den).
         """
 
-        return self.__numerator / self.__denominator  # converts fraction to decimal
+        return self.numerator / self.denominator  # converts fraction to decimal
 
     # ------------------ Properties checking ------------------
 
@@ -199,7 +199,7 @@ class Fraction:
         POST : Returns True if num == 0, otherwise False.
         """
 
-        return self.__numerator == 0
+        return self.numerator == 0
 
     def is_integer(self):
         """Check if a fraction is integer (ex : 8/4, 3, 2/2, ...)
@@ -208,7 +208,7 @@ class Fraction:
         POST : Returns True if the numerator is an exact multiple of the denominator.
         """
 
-        return self.__numerator % self.__denominator == 0
+        return self.numerator % self.denominator == 0
 
     def is_proper(self):
         """Check if the absolute value of the fraction is < 1
@@ -217,7 +217,7 @@ class Fraction:
         POST : Returns True if the absolute value of the fraction is less than 1.
         """
 
-        return abs(self.__numerator) < self.__denominator
+        return abs(self.numerator) < self.denominator
 
     def is_unit(self):
         """Check if a fraction's numerator is 1 in its reduced form
@@ -226,12 +226,12 @@ class Fraction:
         POST : returns True if the numerator is 1.
         """
 
-        return abs(self.__numerator) == 1
+        return abs(self.numerator) == 1
 
     def is_adjacent_to(self, other):
         """Check if two fractions differ by a unit fraction
 
-        PRE : `other` must be an instance of Fraction.
+        PRE : None
         POST : Returns True if the fractions differ by exactly 1/denominator.
         RAISES : TypeError if `other` is not a Fraction instance.
         """
