@@ -153,7 +153,7 @@ class Fraction:
             return Fraction(num_power, den_power)
 
         if self.numerator < 0:  # Negative base with fractional exponent
-            raise ValueError("Cannot compute the fractional power of a negative number.")
+            raise ValueError("Cannot calculate the fractional power of a negative number.")
 
         # Handle fractional exponents
         num_power = pow(self.__numerator, other.numerator)

@@ -24,6 +24,7 @@ class TestFraction(unittest.TestCase):
         self.assertEqual(Fraction(0, 1) + Fraction(1, 3), Fraction(1, 3))
         self.assertEqual(Fraction(0, 1) + Fraction(0, 1), Fraction(0, 1))
         self.assertEqual(Fraction(-1, 2) + Fraction(1, 2), Fraction(0, 1))
+
         self.assertEqual(Fraction(-1, 3) + Fraction(-2, 3), Fraction(-1, 1))  # negatif + negatif
         self.assertEqual(Fraction(1, 2) + Fraction(2, 3), Fraction(7, 6))  # deux positifs
         self.assertEqual(Fraction(-1, 2) + Fraction(2, 3), Fraction(1, 6))  # negatif + positif
@@ -32,17 +33,19 @@ class TestFraction(unittest.TestCase):
         self.assertEqual(Fraction(0, 1) - Fraction(1, 3), Fraction(-1, 3))
         self.assertEqual(Fraction(1, 3) - Fraction(0, 1), Fraction(1, 3))
         self.assertEqual(Fraction(-1, 2) - Fraction(-1, 2), Fraction(0, 1))
+
         self.assertEqual(Fraction(1, 2) - Fraction(1, 3), Fraction(1, 6))  # positif - positif
-        self.assertEqual(Fraction(1, 2) - Fraction(-1, 3), Fraction(5, 6))  # positif - neg
-        self.assertEqual(Fraction(-1, 2) - Fraction(1, 3), Fraction(-5, 6))  # neg - positif
+        self.assertEqual(Fraction(1, 2) - Fraction(-1, 3), Fraction(5, 6))  # positif - negatif
+        self.assertEqual(Fraction(-1, 2) - Fraction(1, 3), Fraction(-5, 6))  # negatif - positif
 
     def test_multiplication(self):
         self.assertEqual(Fraction(0, 1) * Fraction(1, 3), Fraction(0, 1))
         self.assertEqual(Fraction(1, 3) * Fraction(0, 1), Fraction(0, 1))
         self.assertEqual(Fraction(-1, 2) * Fraction(0, 1), Fraction(0, 1))
         self.assertEqual(Fraction(4, 2) * Fraction(5, 1), Fraction(10, 1))
-        self.assertEqual(Fraction(-4, 2) * Fraction(5, 1), Fraction(-10, 1))  # neg * positif
-        self.assertEqual(Fraction(-4, 2) * Fraction(-5, 1), Fraction(10, 1))  # deux neg
+
+        self.assertEqual(Fraction(-4, 2) * Fraction(5, 1), Fraction(-10, 1))  # negatif * positif
+        self.assertEqual(Fraction(-4, 2) * Fraction(-5, 1), Fraction(10, 1))  # deux negatif
         self.assertEqual(Fraction(1, 2) * Fraction(2, 3), Fraction(1, 3))  # proper * proper
 
     def test_division(self):
@@ -52,15 +55,17 @@ class TestFraction(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError):
             Fraction(0, 1) / Fraction(0, 1)  # 0 / 0
         self.assertEqual(Fraction(4, 2) / Fraction(5, 1), Fraction(2, 5))
-        self.assertEqual(Fraction(-4, 2) / Fraction(5, 1), Fraction(-2, 5))  # neg / positif
-        self.assertEqual(Fraction(-4, 2) / Fraction(-5, 1), Fraction(2, 5))  # deux neg
+
+        self.assertEqual(Fraction(-4, 2) / Fraction(5, 1), Fraction(-2, 5))  # negatif / positif
+        self.assertEqual(Fraction(-4, 2) / Fraction(-5, 1), Fraction(2, 5))  # deux negatif
 
     def test_power(self):
         self.assertEqual(Fraction(0, 1) ** Fraction(2, 1), Fraction(0, 1))
         with self.assertRaises(ZeroDivisionError):
             Fraction(0, 1) ** Fraction(-1, 1)  # 0^(-1)
         self.assertEqual(Fraction(1, 3) ** Fraction(0, 1), Fraction(1, 1))
-        self.assertEqual(Fraction(-1, 2) ** Fraction(2, 1), Fraction(1, 4))  # neg^pair
+
+        self.assertEqual(Fraction(-1, 2) ** Fraction(2, 1), Fraction(1, 4))  # negatif^pair
         with self.assertRaises(ValueError):
             Fraction(-1, 2) ** Fraction(1, 2)  # racine négative
 
@@ -119,11 +124,11 @@ class TestFraction(unittest.TestCase):
             Fraction(1, 2) ** "not a fraction"
 
     # Tests pour couvrir les calculs dans __pow__
-    def test_fractional_exponent_complex_result(self):
+    def test_exponent_complex_result(self):
         with self.assertRaises(ValueError):  # Racine négative
             Fraction(-2, 3) ** Fraction(1, 2)
 
-    def test_fractional_exponent_non_integer_result(self):
+    def test_exponent_non_integer_result(self):
         with self.assertRaises(ValueError):  # Fraction non représentable
             Fraction(2, 3) ** Fraction(1, 2)
 
